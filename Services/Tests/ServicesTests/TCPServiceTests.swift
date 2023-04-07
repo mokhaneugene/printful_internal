@@ -8,7 +8,7 @@
 import XCTest
 @testable import Services
 
-final class TCPServiceTest: XCTestCase {
+class TCPServiceTest: XCTestCase {
 
     // MARK: - Constants
 
@@ -18,7 +18,7 @@ final class TCPServiceTest: XCTestCase {
 
     // MARK: - Private
 
-    private let tcpService: TCPServiceProtocol = TCPService()
+    private(set) var tcpService: TCPServiceProtocol = TCPService()
 
     // MARK: - Public methods
 

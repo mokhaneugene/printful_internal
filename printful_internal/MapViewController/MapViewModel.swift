@@ -27,7 +27,6 @@ final class MapViewModel: MapViewModelling {
     private let services: ServicesContextProtocol
 
     private var userModels: [UserModel] = []
-
     private var cancellables: [AnyCancellable] = []
 
     // MARK: - Init
