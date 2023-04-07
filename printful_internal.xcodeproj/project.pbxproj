@@ -7,14 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		443D6B3329E0065A00416579 /* Services in Frameworks */ = {isa = PBXBuildFile; productRef = 443D6B3229E0065A00416579 /* Services */; };
+		443D6B3E29E00B0700416579 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 443D6B3D29E00B0700416579 /* SnapKit */; };
 		44FDAB3F29DC8F2D00395457 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FDAB3E29DC8F2D00395457 /* AppDelegate.swift */; };
 		44FDAB4329DC8F2D00395457 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FDAB4229DC8F2D00395457 /* ViewController.swift */; };
 		44FDAB4829DC8F2F00395457 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44FDAB4729DC8F2F00395457 /* Assets.xcassets */; };
 		44FDAB4B29DC8F2F00395457 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44FDAB4929DC8F2F00395457 /* LaunchScreen.storyboard */; };
-		44FDAB5C29DC935100395457 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 44FDAB5B29DC935100395457 /* SnapKit-Dynamic */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		443D6B3029E002AB00416579 /* Services */ = {isa = PBXFileReference; lastKnownFileType = text; path = Services; sourceTree = SOURCE_ROOT; };
 		44FDAB3B29DC8F2D00395457 /* printful_internal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = printful_internal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		44FDAB3E29DC8F2D00395457 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		44FDAB4229DC8F2D00395457 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -28,18 +30,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44FDAB5C29DC935100395457 /* SnapKit-Dynamic in Frameworks */,
+				443D6B3329E0065A00416579 /* Services in Frameworks */,
+				443D6B3E29E00B0700416579 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		443D6B3129E0065A00416579 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		44FDAB3229DC8F2D00395457 = {
 			isa = PBXGroup;
 			children = (
 				44FDAB3D29DC8F2D00395457 /* printful_internal */,
+				443D6B3029E002AB00416579 /* Services */,
 				44FDAB3C29DC8F2D00395457 /* Products */,
+				443D6B3129E0065A00416579 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -80,7 +92,8 @@
 			);
 			name = printful_internal;
 			packageProductDependencies = (
-				44FDAB5B29DC935100395457 /* SnapKit-Dynamic */,
+				443D6B3229E0065A00416579 /* Services */,
+				443D6B3D29E00B0700416579 /* SnapKit */,
 			);
 			productName = printful_internal;
 			productReference = 44FDAB3B29DC8F2D00395457 /* printful_internal.app */;
@@ -111,7 +124,7 @@
 			);
 			mainGroup = 44FDAB3229DC8F2D00395457;
 			packageReferences = (
-				44FDAB5A29DC935100395457 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				443D6B3C29E00B0600416579 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 44FDAB3C29DC8F2D00395457 /* Products */;
 			projectDirPath = "";
@@ -356,21 +369,25 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		44FDAB5A29DC935100395457 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		443D6B3C29E00B0600416579 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
-				branch = develop;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		44FDAB5B29DC935100395457 /* SnapKit-Dynamic */ = {
+		443D6B3229E0065A00416579 /* Services */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 44FDAB5A29DC935100395457 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
+			productName = Services;
+		};
+		443D6B3D29E00B0700416579 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 443D6B3C29E00B0600416579 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
