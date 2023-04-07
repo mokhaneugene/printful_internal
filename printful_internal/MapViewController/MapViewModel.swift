@@ -28,7 +28,7 @@ final class MapViewModel: MapViewModelling {
 
     private var userModels: [UserModel] = []
 
-    private var cancellable: AnyCancellable?
+    private var cancellables: [AnyCancellable] = []
 
     // MARK: - Init
 
@@ -38,8 +38,8 @@ final class MapViewModel: MapViewModelling {
     }
 
     deinit {
-        cancellable?.cancel()
-        cancellable = nil
+        cancellables.forEach({ $0.cancel() })
+        cancellables = []
     }
 
     // MARK: - Public methods
@@ -54,16 +54,36 @@ final class MapViewModel: MapViewModelling {
 
 private extension MapViewModel {
     func setupModels() {
-        cancellable = services.usersService.getUserModels(for: Constants.email)
+        setupUserModels()
+        updateUserModels()
+    }
+
+    func setupUserModels() {
+        let cancellable = services.usersService.getUserModels(for: Constants.email)
             .sink(
                 receiveCompletion: { _ in
                     // TODO: - Show error view
                 },
                 receiveValue: { [weak self] userModels in
                     self?.userModels = userModels
-                    print("@@@")
-                    print(userModels)
+                    print("====")
+                    print("userModels: \(userModels)")
                 }
             )
+        cancellables.append(cancellable)
+    }
+
+    func updateUserModels() {
+        let cancellable = services.usersService.getUsersUpdates()
+            .sink(
+                receiveCompletion: { _ in
+                    // TODO: - Show error view
+                },
+                receiveValue: { [weak self] userModels in
+                    print("====")
+                    print("updates: \(userModels)")
+                }
+            )
+        cancellables.append(cancellable)
     }
 }

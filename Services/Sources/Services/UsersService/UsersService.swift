@@ -14,6 +14,7 @@ public protocol UsersServiceHolder {
 
 public protocol UsersServiceProtocol {
     func getUserModels(for email: String) -> AnyPublisher<[UserModel], TCPError>
+    func getUsersUpdates() -> AnyPublisher<[UserModel], TCPError>
 }
 
 final public class UsersService: UsersServiceProtocol {
@@ -29,7 +30,8 @@ final public class UsersService: UsersServiceProtocol {
     private let dependencies: Dependencies
 
     private var userModels: [UserModel] = []
-    private var userModelsSubject = PassthroughSubject<[UserModel], TCPError>()
+    private var modelsSubject = PassthroughSubject<[UserModel], TCPError>()
+    private var updatesSubject = PassthroughSubject<[UserModel], TCPError>()
 
     // MARK: - Init
 
@@ -42,9 +44,15 @@ final public class UsersService: UsersServiceProtocol {
     public func getUserModels(for email: String) -> AnyPublisher<[UserModel], TCPError> {
         defer {
             setupUserModels(for: email)
+        }
+        return modelsSubject.eraseToAnyPublisher()
+    }
+
+    public func getUsersUpdates() -> AnyPublisher<[UserModel], TCPError> {
+        defer {
             updateUserModels()
         }
-        return userModelsSubject.eraseToAnyPublisher()
+        return updatesSubject.eraseToAnyPublisher()
     }
 }
 
@@ -57,10 +65,10 @@ private extension UsersService {
             completion: { [weak self] result in
                 switch result {
                 case .failure(_):
-                    self?.userModelsSubject.send(completion: .finished)
+                    self?.modelsSubject.send(completion: .finished)
                 case .success(let models):
                     self?.userModels = models
-                    self?.userModelsSubject.send(models)
+                    self?.modelsSubject.send(models)
                 }
             }
         )
@@ -73,26 +81,25 @@ private extension UsersService {
 
                 switch result {
                 case .failure(let error):
-                    self.userModelsSubject.send(completion: .failure(error))
+                    self.updatesSubject.send(completion: .failure(error))
                 case .success(let models):
-                    models.forEach({ self.updateUserModel(with: $0) })
-                    self.userModelsSubject.send(self.userModels)
+                    let userModels = models.compactMap({ self.updateUserModel(with: $0) })
+                    self.updatesSubject.send(userModels)
                 }
             }
         )
     }
 
-    func updateUserModel(with model: UserModel) {
-        guard let userModel = userModels.first(where: { $0.id == model.id }),
-              let index = userModels.firstIndex(where: { $0.id == model.id }) else {
-            return
-        }
+    func updateUserModel(with model: UserModel) -> UserModel? {
+        guard let userModel = userModels.first(where: { $0.id == model.id }) else { return nil }
 
         if model.latitude != userModel.latitude {
-            userModels[index].latitude = model.latitude
+            return model
         }
         if model.longitude != userModel.longitude {
-            userModels[index].longitude = model.longitude
+            return model
         }
+
+        return nil
     }
 }

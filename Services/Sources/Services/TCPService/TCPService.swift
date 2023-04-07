@@ -62,6 +62,7 @@ final public class TCPService: TCPServiceProtocol {
                 try socket.write(from: command)
                 try socket.setReadTimeout(value: Constants.timeout)
 
+                // Can be edit to waiting the new users
                 while !self.isUserModelExist {
                     guard let userModels = try self.getUserModels(for: .userlist) else { continue }
 
