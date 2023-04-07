@@ -23,7 +23,7 @@ final public class TCPService: TCPServiceProtocol {
     // MARK: - Constants
 
     private enum Constants {
-        static let host: String = "ios-test.printful.lv"
+        static let host: String = ProcessInfo.processInfo.environment["HOST_URL"] ?? ""
         static let port: Int32 = 6111
         static let bufferSize: Int = 4096
         static let timeout: UInt = 5 // Seconds
@@ -50,7 +50,7 @@ final public class TCPService: TCPServiceProtocol {
 
     public func run(with email: String, completion: @escaping (Result<[UserModel], TCPError>) -> Void) {
         let command = TCPCommand.authorize.value + email + "\n"
-
+        
         queue.async { [weak self] in
             guard let self = self else { return }
 
