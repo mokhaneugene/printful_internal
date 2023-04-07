@@ -18,7 +18,7 @@ final class TCPServiceTest: XCTestCase {
 
     // MARK: - Private
 
-    private let tcpService = TCPService()
+    private let tcpService: TCPServiceProtocol = TCPService()
 
     // MARK: - Public methods
 
