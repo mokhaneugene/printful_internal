@@ -24,14 +24,18 @@ class UsersServiceTest: TCPServiceTest {
     }()
 
     func testGetUserModels() {
-        _ = usersService.getUserModels(for: Constants.email)
+        let expectation = expectation(description: "Expecting userModels")
+
+        let cancelable = usersService.getUserModels(for: Constants.email)
             .sink(
                 receiveCompletion: { _ in
-                    XCTAssert(false)
+                    XCTFail("Should not return error")
                 },
                 receiveValue: { userModels in
                     XCTAssert(!userModels.isEmpty)
+                    expectation.fulfill()
                 }
             )
+        waitForExpectations(timeout: 5, handler: nil)
     }
 }

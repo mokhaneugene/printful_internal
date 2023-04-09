@@ -10,29 +10,48 @@ import XCTest
 
 class TCPServiceTest: XCTestCase {
 
-    // MARK: - Constants
-
-    private enum Constants {
-        static let email: String = "mokhaneugene"
-    }
-
     // MARK: - Private
 
     private(set) var tcpService: TCPServiceProtocol = TCPService()
 
     // MARK: - Public methods
 
-    func testAuthorizeRequest() {
+    func testAuthorizeRequest_valid_email() {
+        let expectation = expectation(description: "Expecting response")
+        let email = "mokhaneugene"
+
         tcpService.run(
-            with: Constants.email,
+            with: email,
             completion: { result in
                 switch result {
                 case .failure(_):
-                    XCTAssert(false)
-                case .success(_):
-                    XCTAssert(true)
+                    XCTFail("Should not return error")
+                case .success(let userModels):
+                    XCTAssertNotNil(userModels)
+                    expectation.fulfill()
                 }
             }
         )
+        waitForExpectations(timeout: 5, handler: nil)
     }
+
+    // TODO: - Should be fixed at the backEnd side
+//    func testAuthorizeRequest_invalid_email() {
+//        let expectation = expectation(description: "Expecting response")
+//        let email = "mokhaneugene@gmail.com"
+//
+//        tcpService.run(
+//            with: email,
+//            completion: { result in
+//                switch result {
+//                case .failure(let error):
+//                    XCTAssertNotNil(error)
+//                    expectation.fulfill()
+//                case .success(_):
+//                    XCTFail("Should not succeed with an invalid email")
+//                }
+//            }
+//        )
+//        waitForExpectations(timeout: 5, handler: nil)
+//    }
 }
