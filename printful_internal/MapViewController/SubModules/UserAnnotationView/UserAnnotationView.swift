@@ -7,6 +7,7 @@
 
 import Foundation
 import MapKit
+import Kingfisher
 
 class UserAnnotationView: MKAnnotationView {
 
@@ -62,6 +63,7 @@ class UserAnnotationView: MKAnnotationView {
         canShowCallout = true
 
         titleLabel.text = userAnnotation.titleText
+        updateImageView(with: userAnnotation.imageLink)
         updateDescriptionLabel(with: userAnnotation.coordinate)
     }
 }
@@ -86,9 +88,14 @@ private extension UserAnnotationView {
     }
 
     func setupImageView() {
-        imageView.backgroundColor = .green
         imageView.bounds = CGRect(origin: .zero, size: Constants.imageViewSize)
         leftCalloutAccessoryView = imageView
+    }
+
+    func updateImageView(with imageLink: String?) {
+        guard let imageLink = imageLink, let url = URL(string: imageLink) else { return }
+        
+        imageView.kf.setImage(with: url)
     }
 
     func setupStackView() {
