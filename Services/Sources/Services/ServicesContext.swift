@@ -13,8 +13,8 @@ UsersServiceHolder
 
 public struct ServicesContext: ServicesContextProtocol {
 
-    public var tcpService: TCPServiceProtocol
-    public var usersService: UsersServiceProtocol
+    public let tcpService: TCPServiceProtocol
+    public let usersService: UsersServiceProtocol
 
     // MARK: - Init
 
